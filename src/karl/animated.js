@@ -1,21 +1,8 @@
-import React from "react";
-import { Keyframes, animated } from "react-spring";
-import { TimingAnimation, Easing } from "react-spring/dist/addons.cjs";
+import React from 'react';
+import { Keyframes, animated } from 'react-spring';
+import { TimingAnimation, Easing } from 'react-spring/dist/addons.cjs';
 
-import {
-  Defs,
-  Circle,
-  Shirt,
-  Head,
-  Eyes,
-  Nose,
-  Glasses,
-  FacialHair,
-  Desk,
-  CoffeeCup,
-  Keyboard,
-  Arm
-} from "./parts";
+import { Defs, Circle, Shirt, Head, Eyes, Nose, Glasses, FacialHair, Desk, CoffeeCup, Keyboard, Arm } from './parts';
 
 let prev = 0;
 const HandAnimator = Keyframes.Spring(async next => {
@@ -24,12 +11,12 @@ const HandAnimator = Keyframes.Spring(async next => {
     await next({
       from: {
         leftLateral: prev,
-        rightLateral: prev
+        rightLateral: prev,
       },
       to: {
         leftLateral: nextVal,
-        rightLateral: nextVal
-      }
+        rightLateral: nextVal,
+      },
     });
     prev = nextVal;
   }
