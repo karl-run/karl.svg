@@ -5,7 +5,7 @@
       {
         "modules": false,
         "targets": {
-          "browsers": ["last 2 chrome versions", "ie11"]
+          "browsers": ["last 2 chrome versions"]
         }
       }
     ],
