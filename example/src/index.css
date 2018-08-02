@@ -1,0 +1,27 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+  width: 100%;
+}
+
+h1 {
+  text-align: center;
+}
+
+#root {
+  width: 100%;
+}
+
+#app {
+  width: 100%;
+}
+
+.svg-container {
+  height: 40vh;
+  display: flex;
+  justify-content: space-around;
+}
+
+.svg-container svg {
+  flex: 1 1 40%;
+}
