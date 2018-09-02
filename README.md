@@ -13,14 +13,14 @@ npm install --save karl.svg
 ```jsx
 import React, { Component } from 'react';
 
-import { KarlLogoNormal, KarlLogoAnimated } from 'karl.svg';
+import KarlLogo from 'karl.svg';
 
 class Example extends Component {
   render() {
     return (
       <div>
-        <KarlLogoNormal />
-        <KarlLogoAnimated />
+        <KarlLogo.Normal />
+        <KarlLogo.Animated />
       </div>
     );
   }

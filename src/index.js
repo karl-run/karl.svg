@@ -1,9 +1,9 @@
-import KarlLogoNormal from './karl/normal';
-import KarlLogoAnimated from './karl/animated';
+import Normal from './karl/normal';
+import Animated from './karl/animated';
 
-const Svg = {
-  KarlLogoAnimated,
-  KarlLogoNormal,
+const Logo = {
+  Normal,
+  Animated,
 };
 
-export default Svg;
+export default Logo;
