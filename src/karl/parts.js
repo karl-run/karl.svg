@@ -25,8 +25,8 @@ Circle.defaultProps = {
   scale: 1,
 };
 
-export const Head = ({ children, x, y }) => (
-  <g transform={`translate(${x} ${y})`}>
+export const Head = ({ children, x, y, scale = 1, noNeck = false }) => (
+  <g transform={`translate(${x} ${y}) scale(${scale})`} transform-origin="center">
     {/* høyre øre ytterst */}
     <ellipse
       cx="310.8"
@@ -66,15 +66,17 @@ export const Head = ({ children, x, y }) => (
     />
 
     {/* head */}
-    <rect
-      width="34.1"
-      height="42.5"
-      x="237.3"
-      y="271.3"
-      className="cls-3"
-      rx="12"
-      ry="4"
-    />
+    {!noNeck && (
+      <rect
+        width="34.1"
+        height="42.5"
+        x="237.3"
+        y="271.3"
+        className="cls-3"
+        rx="12"
+        ry="4"
+      />
+    )}
     <path
       d="M263.6 285l-18.3-.5c-20.5-.3-42.1-18.7-41.9-40.9l-5-61.7c.3-23.6 19-42.5 41.9-42l31.8.5c22.8.5 41.1 20 40.8 43.6l-6.4 61.6c-.3 22.2-22.4 39.9-42.9 39.5z"
       className="cls-3"
@@ -275,7 +277,7 @@ export const Arm = ({ right, x, y, fingerOffset }) => {
   if (right) offset = 84.3;
 
   //const fingerMultiplier = (x, f) => Math.sin(f) * (((x + 1) * 5 - 3) / 4);
-  const fingerMultiplier = (x, f) => Math.sin(x + f * 2 * Math.PI / 4) * 5;
+  const fingerMultiplier = (x, f) => Math.sin(x + (f * 2 * Math.PI) / 4) * 5;
 
   return (
     <g transform={`translate(${x} ${y})`}>

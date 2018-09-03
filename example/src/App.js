@@ -11,6 +11,7 @@ export default class App extends Component {
         <div className="svg-container">
           <Logo.Animated />
           <Logo.Normal />
+          <Logo.Head />
         </div>
       </div>
     );
