@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
-import { Keyframes, animated, Spring, config } from 'react-spring';
+import { Keyframes, Spring, config } from 'react-spring';
 import {
   TimingAnimation,
-  OscillatorAnimation,
   Easing,
+  OscillatorAnimation,
 } from 'react-spring/dist/addons.cjs';
 
 import {
@@ -21,13 +21,13 @@ import {
   Arm,
 } from './parts';
 
-const createHandAnimator = (mod = 1) => {
+const createHandAnimator = (direction = 1) => {
   let x = 0;
   let y = 0;
 
   return Keyframes.Spring(async next => {
     while (true) {
-      const nextX = Math.random() * 15 * mod;
+      const nextX = Math.random() * 15 * direction;
       const nextY = Math.random() * 5;
       await next({
         from: {
@@ -61,11 +61,12 @@ const FingerAnimator = Keyframes.Spring(async next => {
   }
 });
 
-const EndlessRotation = Keyframes.Spring(async next => {
+const CircleEntry = Keyframes.Spring(async next => {
   await next({
     from: { scale: 0 },
     to: { scale: 1.2 },
     config: config.wobbly,
+    delay: 500,
   });
   await next({
     from: { scale: 1.2 },
@@ -74,70 +75,86 @@ const EndlessRotation = Keyframes.Spring(async next => {
   });
 });
 
-const Animated = () => (
+const ThingsEntry = Keyframes.Spring(async next => {
+  await next({ delay: 200, to: { desk: -500, body: -500, cup: 200 } });
+  await next({ to: { desk: 0, body: -500, cup: 200 }, config: config.wobbly });
+  await next({ to: { desk: 0, body: 0, cup: 200 }, config: config.wobbly });
+  await next({ to: { desk: 0, body: 0, cup: 0 }, config: config.wobbly });
+});
+
+const Animated = ({ noEntry = false }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
     <Defs />
-    <EndlessRotation>
-      {({ scale, degrees }) => <Circle rotation={degrees} scale={scale} />}
-    </EndlessRotation>
-    <Spring from={{ right: 200 }} to={{ right: 0 }} config={config.wobbly}>
-      {styles => (
+    <CircleEntry immediate={noEntry}>
+      {({ scale }) => <Circle scale={scale} />}
+    </CircleEntry>
+    <ThingsEntry immediate={noEntry}>
+      {things => (
         <Fragment>
-          <Shirt x={styles.right * 2.3} />
-          <Head x={-styles.right * 2.5}>
-            <Eyes x={styles.right * 2.6} />
-            <Nose x={-styles.right * 2.8} />
-            <Glasses x={styles.right * 3.1} />
-            <FacialHair x={-styles.right * 2.4} />
+          <Shirt x={things.body} />
+          <Head x={things.body}>
+            <Eyes />
+            <Nose />
+            <Glasses />
+            <FacialHair />
           </Head>
-          <Desk x={styles.right * 2.5}>
-            <CoffeeCup x={-styles.right * 2.3} />
-            <Keyboard x={styles.right * 1.7} />
+          <Desk x={things.desk}>
+            <Keyboard />
           </Desk>
-        </Fragment>
-      )}
-    </Spring>
-
-    <g>
-      <LeftHandAnimator
-        impl={TimingAnimation}
-        delay={37}
-        config={{ duration: 137, easing: Easing.cubic }}
-      >
-        {values => {
-          return (
-            <FingerAnimator
+          <CoffeeCup x={things.cup} />
+          <g>
+            <LeftHandAnimator
               impl={TimingAnimation}
               delay={37}
               config={{ duration: 137, easing: Easing.cubic }}
             >
-              {({ offset }) => (
-                <Arm left x={values.x} y={values.y} fingerOffset={offset} />
-              )}
-            </FingerAnimator>
-          );
-        }}
-      </LeftHandAnimator>
-      <RightHandAnimator
-        impl={TimingAnimation}
-        delay={37}
-        config={{ duration: 137, easing: Easing.cubic }}
-      >
-        {values => {
-          return (
-            <FingerAnimator
+              {values => {
+                return (
+                  <FingerAnimator
+                    impl={TimingAnimation}
+                    delay={37}
+                    config={{ duration: 137, easing: Easing.cubic }}
+                  >
+                    {({ offset }) => (
+                      <Arm
+                        left
+                        x={values.x + things.body}
+                        y={values.y}
+                        fingerOffset={offset}
+                      />
+                    )}
+                  </FingerAnimator>
+                );
+              }}
+            </LeftHandAnimator>
+            <RightHandAnimator
               impl={TimingAnimation}
-              delay={29}
-              config={{ duration: 169, easing: Easing.cubic }}
+              delay={37}
+              config={{ duration: 137, easing: Easing.cubic }}
             >
-              {({ offset }) => (
-                <Arm right x={values.x} y={values.y} fingerOffset={offset} />
-              )}
-            </FingerAnimator>
-          );
-        }}
-      </RightHandAnimator>
-    </g>
+              {values => {
+                return (
+                  <FingerAnimator
+                    impl={TimingAnimation}
+                    delay={29}
+                    config={{ duration: 169, easing: Easing.cubic }}
+                  >
+                    {({ offset }) => (
+                      <Arm
+                        right
+                        x={values.x + things.body}
+                        y={values.y}
+                        fingerOffset={offset}
+                      />
+                    )}
+                  </FingerAnimator>
+                );
+              }}
+            </RightHandAnimator>
+          </g>
+        </Fragment>
+      )}
+    </ThingsEntry>
   </svg>
 );
 
