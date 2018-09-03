@@ -270,9 +270,12 @@ CoffeeCup.defaultProps = {
   y: 0,
 };
 
-export const Arm = ({ right, x, y }) => {
+export const Arm = ({ right, x, y, fingerOffset }) => {
   let offset = 0;
   if (right) offset = 84.3;
+
+  //const fingerMultiplier = (x, f) => Math.sin(f) * (((x + 1) * 5 - 3) / 4);
+  const fingerMultiplier = (x, f) => Math.sin(x + f * 2 * Math.PI / 4) * 5;
 
   return (
     <g transform={`translate(${x} ${y})`}>
@@ -280,7 +283,7 @@ export const Arm = ({ right, x, y }) => {
       <rect
         width="21.1"
         height="5.4"
-        x="191.5"
+        x={191.5 + fingerMultiplier(fingerOffset, 0)}
         y={381.8 - offset}
         className="cls-3"
         rx="2.6"
@@ -290,7 +293,7 @@ export const Arm = ({ right, x, y }) => {
       <rect
         width="21.1"
         height="5.4"
-        x="198.8"
+        x={198.8 + fingerMultiplier(fingerOffset, 1)}
         y={381.8 - offset}
         className="cls-3"
         rx="2.6"
@@ -300,7 +303,7 @@ export const Arm = ({ right, x, y }) => {
       <rect
         width="21.1"
         height="5.4"
-        x="206.1"
+        x={206.1 + fingerMultiplier(fingerOffset, 2)}
         y={381.8 - offset}
         className="cls-3"
         rx="2.6"
@@ -310,7 +313,7 @@ export const Arm = ({ right, x, y }) => {
       <rect
         width="21.1"
         height="5.4"
-        x="213.3"
+        x={213.3 + fingerMultiplier(fingerOffset, 3)}
         y={381.8 - offset}
         className="cls-3"
         rx="2.6"
@@ -324,4 +327,5 @@ export const Arm = ({ right, x, y }) => {
 Arm.defaultProps = {
   x: 0,
   y: 0,
+  fingerOffset: 0,
 };

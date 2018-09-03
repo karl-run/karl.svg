@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Normal, { Animated } from 'karl.svg';
+import Logo from 'karl.svg';
 
 export default class App extends Component {
   render() {
@@ -9,8 +9,8 @@ export default class App extends Component {
         <h1>karl.getMovin(true);</h1>
 
         <div className="svg-container">
-          <Animated />
-          <Normal />
+          <Logo.Animated />
+          <Logo.Normal />
         </div>
       </div>
     );
