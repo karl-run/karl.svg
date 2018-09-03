@@ -1,10 +1,6 @@
 import React, { Fragment } from 'react';
-import { Keyframes, Spring, config } from 'react-spring';
-import {
-  TimingAnimation,
-  Easing,
-  OscillatorAnimation,
-} from 'react-spring/dist/addons.cjs';
+import { Keyframes, config } from 'react-spring';
+import { TimingAnimation, Easing } from 'react-spring/dist/addons.cjs';
 
 import {
   Defs,
@@ -27,7 +23,7 @@ const createHandAnimator = (direction = 1) => {
 
   return Keyframes.Spring(async next => {
     while (true) {
-      const nextX = Math.random() * 15 * direction;
+      const nextX = Math.random() * 15 * (direction == null ? 1 : direction);
       const nextY = Math.random() * 5;
       await next({
         from: {
@@ -82,7 +78,7 @@ const ThingsEntry = Keyframes.Spring(async next => {
   await next({ to: { desk: 0, body: 0, cup: 0 }, config: config.wobbly });
 });
 
-const Animated = ({ noEntry = false }) => (
+const Animated = ({ noEntry }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
     <Defs />
     <CircleEntry immediate={noEntry}>
@@ -157,5 +153,9 @@ const Animated = ({ noEntry = false }) => (
     </ThingsEntry>
   </svg>
 );
+
+Animated.defaultProps = {
+  noEntry: false,
+};
 
 export default Animated;
