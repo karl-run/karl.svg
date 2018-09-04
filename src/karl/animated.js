@@ -59,55 +59,49 @@ const doDrink = async next => {
   });
 };
 
-const createHandAnimator = (direction, drink) => {
+const HandAnimator = Keyframes.Spring(async (next, { direction, drink }) => {
+  await next({
+    from: {
+      x: 0,
+      y: 0,
+      rotate: 0,
+      cup: false,
+    },
+  });
+
+  let allowedToDrink = false;
+  setTimeout(() => {
+    allowedToDrink = true;
+  }, 2500);
+
   let x = 0;
   let y = 0;
+  while (true) {
+    const nextX = Math.random() * 15 * (direction == null ? 1 : direction);
+    const nextY = Math.random() * 5;
 
-  return Keyframes.Spring(async (next, { noDrink }) => {
+    if (allowedToDrink && drink && Math.round(Math.random() * 12) === 1) {
+      await doDrink(next);
+    }
+
     await next({
       from: {
-        x: 0,
-        y: 0,
+        x: x,
+        y: y,
+        rotate: 0,
+        cup: false,
+      },
+      to: {
+        x: nextX,
+        y: nextY,
         rotate: 0,
         cup: false,
       },
     });
-
-    let allowedToDrink = false;
-    setTimeout(() => {
-      allowedToDrink = true;
-    }, 2500);
-
-    while (true) {
-      const nextX = Math.random() * 15 * (direction == null ? 1 : direction);
-      const nextY = Math.random() * 5;
-
-      if (allowedToDrink && drink && Math.round(Math.random() * 12) === 1) {
-        await doDrink(next);
-      }
-
-      await next({
-        from: {
-          x: x,
-          y: y,
-          rotate: 0,
-          cup: false,
-        },
-        to: {
-          x: nextX,
-          y: nextY,
-          rotate: 0,
-          cup: false,
-        },
-      });
-      x = nextX;
-      y = nextY;
-    }
-  });
-};
-
-const LeftHandAnimator = createHandAnimator(1, false);
-const RightHandAnimator = createHandAnimator(-1, true);
+    x = nextX;
+    y = nextY;
+  }
+});
 
 const FingerAnimator = Keyframes.Spring(async next => {
   while (true) {
@@ -183,10 +177,12 @@ const Animated = ({ noEntry }) => (
             <Keyboard />
           </Desk>
           <g>
-            <LeftHandAnimator
+            <HandAnimator
               impl={TimingAnimation}
               delay={21}
               config={{ duration: 137, easing: Easing.cubic }}
+              direction={1}
+              drink={false}
             >
               {values => {
                 return (
@@ -205,12 +201,13 @@ const Animated = ({ noEntry }) => (
                   </FingerAnimator>
                 );
               }}
-            </LeftHandAnimator>
-            <RightHandAnimator
+            </HandAnimator>
+            <HandAnimator
               impl={TimingAnimation}
               delay={37}
               config={{ duration: 137, easing: Easing.cubic }}
-              noDrink={things.cup !== 0}
+              direction={-1}
+              drink={true}
             >
               {values => {
                 return (
@@ -242,7 +239,7 @@ const Animated = ({ noEntry }) => (
                   </FingerAnimator>
                 );
               }}
-            </RightHandAnimator>
+            </HandAnimator>
           </g>
         </Fragment>
       )}
