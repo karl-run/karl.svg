@@ -26,7 +26,10 @@ Circle.defaultProps = {
 };
 
 export const Head = ({ children, x, y, scale = 1, noNeck = false }) => (
-  <g transform={`translate(${x} ${y}) scale(${scale})`} transform-origin="center">
+  <g
+    transform={`translate(${x} ${y}) scale(${scale})`}
+    transform-origin="center"
+  >
     {/* høyre øre ytterst */}
     <ellipse
       cx="310.8"
@@ -137,16 +140,29 @@ Shirt.defaultProps = {
   y: 0,
 };
 
-export const Eyes = ({ x, y }) => (
+export const Eyes = ({ x, y, winkifier }) => (
   <g transform={`translate(${x} ${y})`}>
-    <ellipse cx="282.2" cy="210.3" className="cls-7" rx="7.3" ry="5.7" />
-    <ellipse cx="227" cy="210.3" className="cls-7" rx="7.3" ry="5.7" />
+    <ellipse
+      cx="282.2"
+      cy="210.3"
+      className="cls-7"
+      rx="7.3"
+      ry={5.7 * winkifier}
+    />
+    <ellipse
+      cx="227"
+      cy="210.3"
+      className="cls-7"
+      rx="7.3"
+      ry={5.7 * winkifier}
+    />
   </g>
 );
 
 Eyes.defaultProps = {
   x: 0,
   y: 0,
+  winkifier: 1,
 };
 
 export const Nose = ({ x, y }) => (
@@ -272,7 +288,7 @@ CoffeeCup.defaultProps = {
   y: 0,
 };
 
-export const Arm = ({ right, x, y, fingerOffset }) => {
+export const Arm = ({ right, x, y, rotate, fingerOffset }) => {
   let offset = 0;
   if (right) offset = 84.3;
 
@@ -280,7 +296,11 @@ export const Arm = ({ right, x, y, fingerOffset }) => {
   const fingerMultiplier = (x, f) => Math.sin(x + (f * 2 * Math.PI) / 4) * 5;
 
   return (
-    <g transform={`translate(${x} ${y})`}>
+    <g
+      transform={`translate(${x} ${y}) rotate(${rotate})`}
+      transform-origin="60% 75%"
+      transform-box="fill-box"
+    >
       <circle cx={213 + offset} cy="374.3" r="13.6" className="cls-3" />
       <rect
         width="21.1"
@@ -329,5 +349,6 @@ export const Arm = ({ right, x, y, fingerOffset }) => {
 Arm.defaultProps = {
   x: 0,
   y: 0,
+  rotate: 0,
   fingerOffset: 0,
 };

@@ -25,6 +25,7 @@
     "prepare": "npm run build"
   },
   "dependencies": {
+    "delay": "^4.0.0",
     "react-spring": "5.5.1"
   },
   "peerDependencies": {
