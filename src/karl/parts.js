@@ -9,15 +9,16 @@ export const Defs = () => (
 );
 
 export const Circle = ({ rotation, scale }) => (
-  <ellipse
-    transform={`rotate(${rotation}) scale(${scale})`}
-    transform-origin="center"
-    fill="#07897c"
-    cx="250"
-    cy="250"
-    rx="197"
-    ry="197"
-  />
+  <g transform="translate(250, 250)">
+    <ellipse
+      transform={`rotate(${rotation}) scale(${scale})`}
+      fill="#07897c"
+      cx="0"
+      cy="0"
+      rx="197"
+      ry="197"
+    />
+  </g>
 );
 
 Circle.defaultProps = {
@@ -291,7 +292,8 @@ CoffeeCup.defaultProps = {
   y: 0,
 };
 
-export const Arm = ({ right, x, y, rotate, fingerOffset }) => {
+const fingerDistance = 6;
+export const Hand = ({ right, x, y, rotate, fingerOffset }) => {
   let offset = 0;
   if (right) offset = 84.3;
 
@@ -299,57 +301,55 @@ export const Arm = ({ right, x, y, rotate, fingerOffset }) => {
   const fingerMultiplier = (x, f) => Math.sin(x + (f * 2 * Math.PI) / 4) * 5;
 
   return (
-    <g
-      transform={`translate(${x} ${y}) rotate(${rotate})`}
-      transform-origin="60% 75%"
-      transform-box="fill-box"
-    >
-      <circle cx={213 + offset} cy="374.3" r="13.6" className="cls-3" />
-      <rect
-        width="21.1"
-        height="5.4"
-        x={191.5 + fingerMultiplier(fingerOffset, 0)}
-        y={381.8 - offset}
-        className="cls-3"
-        rx="2.6"
-        ry="2.6"
-        transform="rotate(90 202 384.5)"
-      />
-      <rect
-        width="21.1"
-        height="5.4"
-        x={198.8 + fingerMultiplier(fingerOffset, 1)}
-        y={381.8 - offset}
-        className="cls-3"
-        rx="2.6"
-        ry="2.6"
-        transform="rotate(90 209.4 384.5)"
-      />
-      <rect
-        width="21.1"
-        height="5.4"
-        x={206.1 + fingerMultiplier(fingerOffset, 2)}
-        y={381.8 - offset}
-        className="cls-3"
-        rx="2.6"
-        ry="2.6"
-        transform="rotate(90 216.6 384.5)"
-      />
-      <rect
-        width="21.1"
-        height="5.4"
-        x={213.3 + fingerMultiplier(fingerOffset, 3)}
-        y={381.8 - offset}
-        className="cls-3"
-        rx="2.6"
-        ry="2.6"
-        transform="rotate(90 224 384.5)"
-      />
+    <g transform={`translate(${213 + x}, ${374.3 + y})`}>
+      <g transform={`rotate(${rotate})`}>
+        <circle cx={offset} r="13.6" className="cls-3" />
+        <rect
+          width="21.1"
+          height="5.4"
+          x={fingerMultiplier(fingerOffset, 0)}
+          y={6.2 - offset - fingerDistance * 0}
+          className="cls-3"
+          rx="2.6"
+          ry="2.6"
+          transform="rotate(90)"
+        />
+        <rect
+          width="21.1"
+          height="5.4"
+          x={fingerMultiplier(fingerOffset, 1)}
+          y={6.2 - offset - fingerDistance * 1}
+          className="cls-3"
+          rx="2.6"
+          ry="2.6"
+          transform="rotate(90)"
+        />
+        <rect
+          width="21.1"
+          height="5.4"
+          x={fingerMultiplier(fingerOffset, 2)}
+          y={6.2 - offset - fingerDistance * 2}
+          className="cls-3"
+          rx="2.6"
+          ry="2.6"
+          transform="rotate(90)"
+        />
+        <rect
+          width="21.1"
+          height="5.4"
+          x={fingerMultiplier(fingerOffset, 3)}
+          y={6.2 - offset - fingerDistance * 3}
+          className="cls-3"
+          rx="2.6"
+          ry="2.6"
+          transform="rotate(90)"
+        />
+      </g>
     </g>
   );
 };
 
-Arm.defaultProps = {
+Hand.defaultProps = {
   x: 0,
   y: 0,
   rotate: 0,
