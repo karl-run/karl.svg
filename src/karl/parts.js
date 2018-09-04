@@ -25,7 +25,7 @@ Circle.defaultProps = {
   scale: 1,
 };
 
-export const Head = ({ children, x, y, scale = 1, noNeck = false }) => (
+export const Head = ({ children, x, y, scale, noNeck }) => (
   <g
     transform={`translate(${x} ${y}) scale(${scale})`}
     transform-origin="center"
@@ -111,6 +111,8 @@ export const Head = ({ children, x, y, scale = 1, noNeck = false }) => (
 Head.defaultProps = {
   x: 0,
   y: 0,
+  scale: 1,
+  noNeck: false,
 };
 
 export const Shirt = ({ x, y }) => (
@@ -254,6 +256,7 @@ export const Keyboard = ({ x, y }) => (
     <path fill="#8c6239" d="M175.4 418.4H336v6.9H175.4z" />
     <path d="M322.5 407.6H188.8l4.3-20.2h122.8l6.6 20.2z" className="cls-15" />
     <path d="M188.8 407.6h133.7v4.1H188.8z" className="cls-16" />
+    {/* <path fill="#b3b3b3" d="M 245 382 L 264 382 L 264 428 L 245 428 Z" /> */}
   </g>
 );
 

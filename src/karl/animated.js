@@ -59,7 +59,7 @@ const doDrink = async next => {
   });
 };
 
-const createHandAnimator = (direction = 1, drink = false) => {
+const createHandAnimator = (direction, drink) => {
   let x = 0;
   let y = 0;
 
@@ -106,7 +106,7 @@ const createHandAnimator = (direction = 1, drink = false) => {
   });
 };
 
-const LeftHandAnimator = createHandAnimator(1);
+const LeftHandAnimator = createHandAnimator(1, false);
 const RightHandAnimator = createHandAnimator(-1, true);
 
 const FingerAnimator = Keyframes.Spring(async next => {
