@@ -19,7 +19,7 @@ import {
 } from './parts';
 
 const drinkLocations = {
-  cup: { x: 190, y: -70 },
+  cup: { x: 194, y: -68 },
   mouth: { x: 82, y: -184 },
 };
 const doDrink = async next => {
@@ -222,10 +222,10 @@ const Animated = ({ noEntry }) => (
                             things.cup
                               ? things.cup
                               : values.cup
-                                ? values.x - 190
+                                ? values.x - 194
                                 : 0
                           }
-                          y={things.cup ? 0 : values.cup ? values.y + 70 : 0}
+                          y={things.cup ? 0 : values.cup ? values.y + 68 : 0}
                         />
                         <Hand
                           right
